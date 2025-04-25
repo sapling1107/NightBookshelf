@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夜的書屋 Night Bookshelf</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <header>
+    <h1>📚 夜的書屋</h1>
+    <nav class="category-nav">
+      <button data-category="bl">BL</button>
+      <button data-category="practical">實用書</button>
+      <button data-category="horror">靈異驚慄</button>
+      <button data-category="scifi">科幻</button>
+      <button data-category="healing">療癒</button>
+      <button data-category="underrated">冷門寶藏</button>
+      <button data-category="special">特價快閃</button>
+      <button id="wishlist-btn">願望書單</button>
+    </nav>
+  </header>
+
+  <main id="book-list" class="grid"></main>
+
+  <section id="book-preview" class="hidden">
+    <button id="back-btn">← 返回</button>
+    <div id="preview-content"></div>
+  </section>
+
+  <section id="wishlist" class="hidden">
+    <h2>🎀 願望書單</h2>
+    <div id="wishlist-items" class="grid"></div>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>

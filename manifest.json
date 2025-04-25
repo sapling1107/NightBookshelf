@@ -1,0 +1,9 @@
+{
+  "name": "夜的書屋 Night Bookshelf",
+  "short_name": "夜的書屋",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#95d5b2",
+  "icons": []
+}
