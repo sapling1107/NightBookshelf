@@ -1,3 +1,4 @@
+// 📚 書籍資料
 const books = [
   {
     id: "1",
@@ -6,11 +7,7 @@ const books = [
     category: "bl",
     cover: "https://placehold.co/200x300?text=BL1",
     description: "一段都市夜色中悄然萌芽的戀情。",
-    links: {
-      bookwalker: "#",
-      readmoo: "#",
-      booksTw: "#"
-    }
+    links: { bookwalker: "#", readmoo: "#", booksTw: "#" }
   },
   {
     id: "2",
@@ -19,11 +16,7 @@ const books = [
     category: "practical",
     cover: "https://placehold.co/200x300?text=實用1",
     description: "讓你重新掌控生活的整理智慧。",
-    links: {
-      bookwalker: "#",
-      readmoo: "#",
-      booksTw: "#"
-    }
+    links: { bookwalker: "#", readmoo: "#", booksTw: "#" }
   },
   {
     id: "3",
@@ -32,11 +25,7 @@ const books = [
     category: "horror",
     cover: "https://placehold.co/200x300?text=靈異1",
     description: "一位少女遇上了夢境般的詭異事件⋯⋯",
-    links: {
-      bookwalker: "#",
-      readmoo: "#",
-      booksTw: "#"
-    }
+    links: { bookwalker: "#", readmoo: "#", booksTw: "#" }
   }
 ];
 
@@ -47,7 +36,6 @@ const wishlistBtn = document.getElementById("wishlist-btn");
 const wishlistSection = document.getElementById("wishlist");
 const wishlistItems = document.getElementById("wishlist-items");
 const backBtn = document.getElementById("back-btn");
-
 let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
 function createBadge(category) {
@@ -138,9 +126,7 @@ function showWishlist() {
   bookPreview.classList.add("hidden");
   wishlistSection.classList.remove("hidden");
 
-  const wishedBooks = wishlist
-    .map(id => books.find(b => b.id === id))
-    .filter(book => book);
+  const wishedBooks = wishlist.map(id => books.find(b => b.id === id)).filter(Boolean);
 
   if (wishedBooks.length === 0) {
     wishlistItems.innerHTML = "<p style='text-align:center;color:#777'>書單目前是空的喔～</p>";
@@ -210,3 +196,29 @@ document.querySelectorAll("[data-category]").forEach(btn => {
 });
 
 renderBooks("bl");
+
+// 🌟 高顏值封面推薦彩蛋按鈕
+const secretBtn = document.createElement("button");
+secretBtn.id = "secret-button";
+secretBtn.textContent = "🌟 高顏值推薦";
+document.body.appendChild(secretBtn);
+
+let bottomTimer = null;
+window.addEventListener("scroll", () => {
+  const scrollBottom = document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+  if (scrollBottom < 10) {
+    if (!bottomTimer) {
+      bottomTimer = setTimeout(() => {
+        document.getElementById("secret-button").style.display = "block";
+      }, 3000);
+    }
+  } else {
+    clearTimeout(bottomTimer);
+    bottomTimer = null;
+    document.getElementById("secret-button").style.display = "none";
+  }
+});
+
+secretBtn.addEventListener("click", () => {
+  alert("這裡將來會進入高顏值封面推薦專區 ✨（開發中）");
+});
