@@ -52,6 +52,7 @@ let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
 function renderBooks(category) {
   bookList.innerHTML = "";
+  bookList.classList.remove("hidden");
   bookPreview.classList.add("hidden");
   wishlistSection.classList.add("hidden");
   const filtered = books.filter(b => b.category === category);
