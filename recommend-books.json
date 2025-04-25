@@ -1,0 +1,20 @@
+[
+  {
+    "title": "戀人失格",
+    "cover": "https://placehold.co/200x300?text=BL",
+    "link": "https://bookwalker.com.tw/product/001",
+    "category": "bl"
+  },
+  {
+    "title": "打掃的科學",
+    "cover": "https://placehold.co/200x300?text=實用",
+    "link": "https://bookwalker.com.tw/product/002",
+    "category": "practical"
+  },
+  {
+    "title": "月光冤魂",
+    "cover": "https://placehold.co/200x300?text=靈異",
+    "link": "https://bookwalker.com.tw/product/003",
+    "category": "horror"
+  }
+]
