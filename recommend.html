@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>新刊推薦 | 夜的書屋</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📚 新刊推薦</h1>
+  </header>
+
+  <div id="recommend-list"></div>
+
+  <script>
+    const container = document.getElementById("recommend-list");
+
+    fetch("recommend-books.json")
+      .then(res => res.json())
+      .then(data => {
+        const groups = {};
+
+        data.forEach(book => {
+          if (!groups[book.category]) {
+            groups[book.category] = [];
+          }
+          groups[book.category].push(book);
+        });
+
+        for (const category in groups) {
+          const section = document.createElement("section");
+
+          const title = document.createElement("h2");
+          title.textContent =
+            category === "bl"
+              ? "🌸 BL 精選推薦"
+              : category === "practical"
+              ? "🧰 實用好書上架"
+              : category === "horror"
+              ? "👻 靈異新刊更新"
+              : `📚 ${category}`;
+          section.appendChild(title);
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+
+          groups[category].forEach(book => {
+            const card = document.createElement("div");
+            card.className = "book-card";
+
+            const img = document.createElement("img");
+            img.src = book.cover;
+            img.alt = book.title;
+            img.addEventListener("click", () => window.open(book.link, "_blank"));
+
+            const title = document.createElement("div");
+            title.className = "title";
+            title.textContent = book.title;
+
+            const addBtn = document.createElement("button");
+            addBtn.textContent = "💚 加入願望書單";
+            addBtn.onclick = () => {
+              let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+              if (!wishlist.includes(book.title)) {
+                wishlist.push(book.title);
+                localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                alert(`已加入：${book.title}`);
+              } else {
+                alert("已在願望書單中！");
+              }
+            };
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(addBtn);
+            grid.appendChild(card);
+          });
+
+          section.appendChild(grid);
+          container.appendChild(section);
+        }
+      });
+  </script>
+</body>
+</html>
