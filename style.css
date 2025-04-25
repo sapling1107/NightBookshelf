@@ -51,8 +51,11 @@ h1 {
   padding: 1.2rem;
 }
 
-#book-list img,
-#wishlist-items img {
+.book-card {
+  text-align: center;
+}
+
+.book-card img {
   width: 100%;
   height: auto;
   border-radius: 12px;
@@ -61,9 +64,21 @@ h1 {
   transition: transform 0.2s;
 }
 
-#book-list img:hover,
-#wishlist-items img:hover {
+.book-card img:hover {
   transform: scale(1.04);
+}
+
+.book-card .title {
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  font-weight: 600;
+  color: #3a5a40;
+}
+
+.book-card .author {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.2rem;
 }
 
 #book-preview {
