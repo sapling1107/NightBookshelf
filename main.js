@@ -87,7 +87,9 @@ function showPreview(book) {
     <img src="${book.cover}" alt="${book.title}" style="max-width: 150px;" />
     <p>${book.description}</p>
     <p>
-      <button onclick="addToWishlist('${book.id}')">加入願望書單</button>
+      <button onclick="addToWishlist('${book.id}')">
+        ${wishlist.includes(book.id) ? "已在願望書單（再次點擊可移除）" : "加入願望書單"}
+      </button>
     </p>
     <p>
       <a href="${book.links.bookwalker}" target="_blank">前往 BookWalker</a> |
@@ -100,9 +102,14 @@ function showPreview(book) {
 }
 
 function addToWishlist(id) {
-  if (!wishlist.includes(id)) wishlist.push(id);
+  const index = wishlist.indexOf(id);
+  if (index === -1) {
+    wishlist.push(id);
+  } else {
+    wishlist.splice(index, 1);
+  }
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  alert("已加入願望書單！");
+  showWishlist();
 }
 
 function showWishlist() {
@@ -110,7 +117,13 @@ function showWishlist() {
   bookList.classList.add("hidden");
   bookPreview.classList.add("hidden");
   wishlistSection.classList.remove("hidden");
+
   const wishedBooks = books.filter(b => wishlist.includes(b.id));
+  if (wishedBooks.length === 0) {
+    wishlistItems.innerHTML = "<p style='text-align:center;color:#777'>書單目前是空的喔～</p>";
+    return;
+  }
+
   wishedBooks.forEach(book => {
     const card = document.createElement("div");
     card.className = "book-card";
@@ -129,9 +142,19 @@ function showWishlist() {
     author.className = "author";
     author.textContent = book.author;
 
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "移除";
+    removeBtn.style.marginTop = "0.3rem";
+    removeBtn.onclick = () => {
+      wishlist = wishlist.filter(id => id !== book.id);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      showWishlist();
+    };
+
     card.appendChild(img);
     card.appendChild(title);
     card.appendChild(author);
+    card.appendChild(removeBtn);
     wishlistItems.appendChild(card);
   });
 }
