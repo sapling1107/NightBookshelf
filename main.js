@@ -50,6 +50,21 @@ const backBtn = document.getElementById("back-btn");
 
 let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
+function createBadge(category) {
+  const badge = document.createElement("div");
+  badge.className = "badge";
+  badge.textContent = category.toUpperCase();
+  badge.style.position = "absolute";
+  badge.style.top = "6px";
+  badge.style.left = "6px";
+  badge.style.backgroundColor = "#3a5a40";
+  badge.style.color = "#fff";
+  badge.style.padding = "2px 6px";
+  badge.style.fontSize = "0.7rem";
+  badge.style.borderRadius = "6px";
+  return badge;
+}
+
 function renderBooks(category) {
   bookList.innerHTML = "";
   bookList.classList.remove("hidden");
@@ -59,6 +74,7 @@ function renderBooks(category) {
   filtered.forEach(book => {
     const card = document.createElement("div");
     card.className = "book-card";
+    card.style.position = "relative";
 
     const img = document.createElement("img");
     img.src = book.cover;
@@ -73,6 +89,9 @@ function renderBooks(category) {
     author.className = "author";
     author.textContent = book.author;
 
+    const badge = createBadge(book.category);
+
+    card.appendChild(badge);
     card.appendChild(img);
     card.appendChild(title);
     card.appendChild(author);
@@ -127,6 +146,7 @@ function showWishlist() {
   wishedBooks.forEach(book => {
     const card = document.createElement("div");
     card.className = "book-card";
+    card.style.position = "relative";
 
     const img = document.createElement("img");
     img.src = book.cover;
@@ -151,6 +171,9 @@ function showWishlist() {
       showWishlist();
     };
 
+    const badge = createBadge(book.category);
+
+    card.appendChild(badge);
     card.appendChild(img);
     card.appendChild(title);
     card.appendChild(author);
