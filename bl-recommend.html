@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>BL 新刊推薦</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>BL 新刊推薦</h1>
+  </header>
+
+  <div id="bl-list" class="grid"></div>
+
+  <script>
+    fetch("bl-books.json")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("bl-list");
+        data.forEach(book => {
+          const card = document.createElement("div");
+          card.className = "book-card";
+
+          const badge = document.createElement("div");
+          badge.className = "badge";
+          badge.textContent = "BL";
+
+          const img = document.createElement("img");
+          img.src = book.cover;
+          img.alt = book.title;
+          img.addEventListener("click", () => window.open(book.link, "_blank"));
+
+          const title = document.createElement("div");
+          title.className = "title";
+          title.textContent = book.title;
+
+          card.appendChild(badge);
+          card.appendChild(img);
+          card.appendChild(title);
+          list.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
