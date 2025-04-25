@@ -6,6 +6,32 @@ body {
   color: #2f2f2f;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+footer::after {
+  content: '';
+  display: block;
+  height: 300px;
+}
+
+#secret-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: #3a5a40;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 999;
+}
+
 header {
   background-color: #ffffff;
   padding: 1.2rem 1rem 0.5rem;
