@@ -54,15 +54,14 @@ function createBadge(category) {
   const badge = document.createElement("div");
   badge.className = "badge";
   badge.textContent = category.toUpperCase();
-  badge.style.position = "absolute";
-  badge.style.top = "6px";
-  badge.style.left = "6px";
-  badge.style.backgroundColor = "#3a5a40";
-  badge.style.color = "#fff";
-  badge.style.padding = "2px 6px";
-  badge.style.fontSize = "0.7rem";
-  badge.style.borderRadius = "6px";
   return badge;
+}
+
+function createTooltip(description) {
+  const tooltip = document.createElement("div");
+  tooltip.className = "tooltip";
+  tooltip.textContent = description.slice(0, 30) + "...";
+  return tooltip;
 }
 
 function renderBooks(category) {
@@ -74,11 +73,14 @@ function renderBooks(category) {
   filtered.forEach(book => {
     const card = document.createElement("div");
     card.className = "book-card";
-    card.style.position = "relative";
+
+    const badge = createBadge(book.category);
+    const tooltip = createTooltip(book.description);
 
     const img = document.createElement("img");
     img.src = book.cover;
     img.alt = book.title;
+    img.title = book.description;
     img.addEventListener("click", () => showPreview(book));
 
     const title = document.createElement("div");
@@ -89,10 +91,9 @@ function renderBooks(category) {
     author.className = "author";
     author.textContent = book.author;
 
-    const badge = createBadge(book.category);
-
     card.appendChild(badge);
     card.appendChild(img);
+    card.appendChild(tooltip);
     card.appendChild(title);
     card.appendChild(author);
     bookList.appendChild(card);
@@ -137,21 +138,33 @@ function showWishlist() {
   bookPreview.classList.add("hidden");
   wishlistSection.classList.remove("hidden");
 
-  const wishedBooks = books.filter(b => wishlist.includes(b.id));
+  const wishedBooks = wishlist
+    .map(id => books.find(b => b.id === id))
+    .filter(book => book);
+
   if (wishedBooks.length === 0) {
     wishlistItems.innerHTML = "<p style='text-align:center;color:#777'>書單目前是空的喔～</p>";
     return;
   }
 
+  const countText = document.createElement("p");
+  countText.style.textAlign = "center";
+  countText.style.color = "#444";
+  countText.style.fontWeight = "500";
+  countText.textContent = `你目前有 ${wishedBooks.length} 本書在願望書單中`;
+  wishlistItems.appendChild(countText);
+
   wishedBooks.forEach(book => {
     const card = document.createElement("div");
     card.className = "book-card";
-    card.style.position = "relative";
+
+    const badge = createBadge(book.category);
+    const tooltip = createTooltip(book.description);
 
     const img = document.createElement("img");
     img.src = book.cover;
     img.alt = book.title;
-    img.title = "點擊查看";
+    img.title = book.description;
     img.addEventListener("click", () => showPreview(book));
 
     const title = document.createElement("div");
@@ -171,10 +184,9 @@ function showWishlist() {
       showWishlist();
     };
 
-    const badge = createBadge(book.category);
-
     card.appendChild(badge);
     card.appendChild(img);
+    card.appendChild(tooltip);
     card.appendChild(title);
     card.appendChild(author);
     card.appendChild(removeBtn);
