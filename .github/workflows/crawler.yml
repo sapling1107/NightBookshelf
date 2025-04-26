@@ -1,0 +1,35 @@
+"""
+name: Crawl Bookwalker
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 每天台灣時間上午9點跑（UTC+0 01:00）
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install axios cheerio
+
+      - name: Run crawler
+        run: node crawl.js
+
+      - name: Commit and push
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add recommend-books.json
+          git commit -m 'auto: update recommend-books.json' || echo 'No changes'
+          git push
+    """
